@@ -3,6 +3,8 @@ class node{
         this.value = value;
         this.left = null;
         this.right = null;
+        this.next = null;
+        this.previous = null;
     }
 }
 
@@ -77,57 +79,135 @@ class binary_tree{
     }
     listPreOrder(){
         if(this.root == null){
-            console.log("")
+            return ""
         }
         else{
-            this._listPreOrderRecursive(this.root)
+            return this._listPreOrderRecursive(this.root)
         }
     }
     _listPreOrderRecursive(root){
-        console.log(root.value)
+        let res="";
+        res=root.value
         if(root.left != null){
-            this._listPreOrderRecursive(root.left)
+            res+=this._listPreOrderRecursive(root.left)
         }
         if (root.right != null){
-            this._listPreOrderRecursive(root.right)
+            res+=this._listPreOrderRecursive(root.right)
         }
+        return res; 
     }
     listPostOrder(){
         if(this.root == null){
-            console.log("")
+            return "";
         }
         else{
-            this._listPostOrderRecursive(this.root)
+            return this._listPostOrderRecursive(this.root)
         }
     }
     _listPostOrderRecursive(root){
+        let res = "";
         if(root.left != null){
-            this._listPostOrderRecursive(root.left)
+            res += this._listPostOrderRecursive(root.left)
         }
         if (root.right != null){
-            this._listPostOrderRecursive(root.right)
+            res += this._listPostOrderRecursive(root.right)
         }
-        console.log(root.value)
+        return  res;
     }
 }
 
+class doubleLinkedList {
+    constructor(){
+        this.first=null;
+      }
+        add(newNode){
+        if (this.first==null)
+          this.first=newNode;
+        else{
+          let aux=this.first;
+            while (aux.next!=null)
+            aux=aux.next;
+            aux.next=newNode;
+            newNode.previous=aux;
+        }
+      }
+      listar(){
+        if (this.first==null)
+          return "";
+        else
+          return this._recListar(this.first);
+      }
+      _recListar(nodo){
+        if (nodo.next==null)
+          return nodo.value;
+        else
+          return nodo.value + ' ' + this._recListar(nodo.next);
+      }
+}
+
+const expression = "5-2*3+4"
+let splitted_expression = expression.split("")
+let listNodes = new doubleLinkedList
+for(let i = 0; i < splitted_expression.length; i++){
+    listNodes.add(new node(splitted_expression[i]))
+}
+
+function makeTree(bin_tree,linkedList,firstNode){
+    aux = firstNode
+    while(aux.next != null){
+        if (aux.value == '*' || aux.value == '/'){
+            aux.left = aux.previous
+            aux.right = aux.next
+            aux.previous.next = null
+            aux.previous = aux.previous.previous
+            if(aux.previous!=null){
+                aux.previous.next.previous = null
+                aux.previous.next = aux
+            }
+            aux.next.previous = null
+            aux.next = aux.next.next
+            if(aux.next!=null){
+                aux.next.previous.next = null
+                aux.next.previous = aux
+                aux = aux.next
+            }
+        }
+        else{
+            aux = aux.next
+        }
+    }
+    while(aux.previous != null){
+        aux = aux.previous
+    }
+    linkedList.first = aux
+    while(aux.next != null){
+        if (aux.value == '+' || aux.value == '-'){
+            aux.left = aux.previous
+            aux.right = aux.next
+            aux.previous.next = null
+            aux.previous = aux.previous.previous
+            if(aux.previous!=null){
+                aux.previous.next.previous = null
+                aux.previous.next = aux
+            }
+            aux.next.previous = null
+            aux.next = aux.next.next
+            if(aux.next!=null){
+                aux.next.previous.next = null
+                aux.next.previous = aux
+                aux = aux.next
+            }
+        }
+        else{
+            aux = aux.next
+        }
+    }
+    bin_tree.root = aux
+}
+
 let myTree = new binary_tree();
-let newNode = new node(3);
-myTree.add(newNode);
-newNode = new node(5);
-myTree.add(newNode);
-newNode = new node(9);
-myTree.add(newNode);
-newNode = new node(15);
-myTree.add(newNode);
-newNode = new node(2);
-myTree.add(newNode);
-newNode = new node(1);
-myTree.add(newNode);
-console.log(myTree.search(2));
-console.log(myTree.search(3));
-console.log(myTree.search(15));
-console.log(myTree.search(7));
-myTree.listInOrder()
-myTree.listPreOrder()
-myTree.listPostOrder()
+
+makeTree(myTree,listNodes,listNodes.first)
+function calculatePreOrder(){
+    
+}
