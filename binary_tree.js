@@ -114,6 +114,108 @@ class binary_tree{
         }
         return  res;
     }
+    makeTree(expression){
+        let splitted_expression = expression.split("")
+        let listNodes = new doubleLinkedList
+        for(let i = 0; i < splitted_expression.length; i++){
+            listNodes.add(new node(splitted_expression[i]))
+        }
+        let aux = listNodes.first;
+        while(aux.next != null){
+            if (aux.value == '*' || aux.value == '/'){
+                aux.left = aux.previous
+                aux.right = aux.next
+                aux.previous.next = null
+                aux.previous = aux.previous.previous
+                if(aux.previous!=null){
+                    aux.previous.next.previous = null
+                    aux.previous.next = aux
+                }
+                aux.next.previous = null
+                aux.next = aux.next.next
+                if(aux.next!=null){
+                    aux.next.previous.next = null
+                    aux.next.previous = aux
+                    aux = aux.next
+                }
+            }
+            else{
+                aux = aux.next
+            }
+        }
+        while(aux.previous != null){
+            aux = aux.previous
+        }
+        listNodes.first = aux
+        while(aux.next != null){
+            if (aux.value == '+' || aux.value == '-'){
+                aux.left = aux.previous
+                aux.right = aux.next
+                aux.previous.next = null
+                aux.previous = aux.previous.previous
+                if(aux.previous!=null){
+                    aux.previous.next.previous = null
+                    aux.previous.next = aux
+                }
+                aux.next.previous = null
+                aux.next = aux.next.next
+                if(aux.next!=null){
+                    aux.next.previous.next = null
+                    aux.next.previous = aux
+                    aux = aux.next
+                }
+            }
+            else{
+                aux = aux.next
+            }
+        }
+        this.root = aux
+    }
+    calculatePreOrder(expression){
+        if(this.root == null){
+            return 0
+        }
+        else{
+            let splitted_expression = expression.split("")
+            let stackNodes = new stack
+            for(let i = 0; i < splitted_expression.length; i++){
+                stackNodes.add(new node(splitted_expression[i]))
+            }
+            let operationStack = new stack
+            while(stackNodes.last != null){
+                let aux = stackNodes.last
+                if(aux.value == '*' || aux.value == '/' || aux.value == '+' || aux.value == '-'){
+                    let res = 0;
+                    let operand1 = operationStack.last;
+                    let operand2 = operationStack.last.previous;
+                    switch (aux.value) {
+                        case '*':
+                            res = parseFloat(operand1) * parseFloat(operand2);
+                            break;
+                        case '/':
+                            res = parseFloat(operand1) / parseFloat(operand2);
+                            break;
+                        case '+':
+                            res = parseFloat(operand1) + parseFloat(operand2);
+                            break;
+                        case '-':
+                            res = parseFloat(operand1) - parseFloat(operand2);
+                            break;
+                    }
+                    operationStack.last = operationStack.last.previous.previous
+                    operationStack.add(new node(res))
+                    stackNodes.last = stackNodes.last.previous
+                    if(stackNodes.last.previous == null){
+                        return operationStack.last
+                    }
+                }
+                else{
+                    operationStack.add(aux)
+                    stackNodes.last = stackNodes.last.previous
+                }
+            }
+        }
+    }
 }
 
 class doubleLinkedList {
@@ -145,69 +247,40 @@ class doubleLinkedList {
       }
 }
 
+class stack{
+    constructor(){
+        this.last=null;
+      }
+    add(newNode){
+        if(this.last==null){
+            this.last=newNode;
+        }
+        else{
+            let aux=this.last;
+            this.last=newNode;
+            this.last.previous=aux;
+        }
+    }
+    list(){
+        if(this.last==null){
+            console.log("")
+        }
+        else{
+            let aux = this.last
+            let res = ""
+            while(aux != null){
+                res += aux.value
+                aux = aux.previous
+            }
+            console.log(res)
+        }
+    }
+}
+
 const expression = "5-2*3+4"
-let splitted_expression = expression.split("")
-let listNodes = new doubleLinkedList
-for(let i = 0; i < splitted_expression.length; i++){
-    listNodes.add(new node(splitted_expression[i]))
-}
-
-function makeTree(bin_tree,linkedList,firstNode){
-    aux = firstNode
-    while(aux.next != null){
-        if (aux.value == '*' || aux.value == '/'){
-            aux.left = aux.previous
-            aux.right = aux.next
-            aux.previous.next = null
-            aux.previous = aux.previous.previous
-            if(aux.previous!=null){
-                aux.previous.next.previous = null
-                aux.previous.next = aux
-            }
-            aux.next.previous = null
-            aux.next = aux.next.next
-            if(aux.next!=null){
-                aux.next.previous.next = null
-                aux.next.previous = aux
-                aux = aux.next
-            }
-        }
-        else{
-            aux = aux.next
-        }
-    }
-    while(aux.previous != null){
-        aux = aux.previous
-    }
-    linkedList.first = aux
-    while(aux.next != null){
-        if (aux.value == '+' || aux.value == '-'){
-            aux.left = aux.previous
-            aux.right = aux.next
-            aux.previous.next = null
-            aux.previous = aux.previous.previous
-            if(aux.previous!=null){
-                aux.previous.next.previous = null
-                aux.previous.next = aux
-            }
-            aux.next.previous = null
-            aux.next = aux.next.next
-            if(aux.next!=null){
-                aux.next.previous.next = null
-                aux.next.previous = aux
-                aux = aux.next
-            }
-        }
-        else{
-            aux = aux.next
-        }
-    }
-    bin_tree.root = aux
-}
-
+const expression2 = "5-2*3+4/2"
 let myTree = new binary_tree();
-
-makeTree(myTree,listNodes,listNodes.first)
-function calculatePreOrder(){
-    
-}
+myTree.makeTree(expression)
+let preOrderExpression = myTree.listPreOrder()
+console.log(myTree.listPreOrder())
+console.log(myTree.calculatePreOrder(preOrderExpression))
