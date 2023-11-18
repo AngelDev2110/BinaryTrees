@@ -112,6 +112,7 @@ class binary_tree{
         if (root.right != null){
             res += this._listPostOrderRecursive(root.right)
         }
+        res+=root.value
         return  res;
     }
     makeTree(expression){
@@ -172,49 +173,59 @@ class binary_tree{
         this.root = aux
     }
     calculatePreOrder(expression){
-        if(this.root == null){
-            return 0
-        }
-        else{
-            let splitted_expression = expression.split("")
-            let stackNodes = new stack
-            for(let i = 0; i < splitted_expression.length; i++){
-                stackNodes.add(new node(splitted_expression[i]))
-            }
-            let operationStack = new stack
-            while(stackNodes.last != null){
-                let aux = stackNodes.last
-                if(aux.value == '*' || aux.value == '/' || aux.value == '+' || aux.value == '-'){
-                    let res = 0;
-                    let operand1 = operationStack.last;
-                    let operand2 = operationStack.last.previous;
-                    switch (aux.value) {
-                        case '*':
-                            res = parseFloat(operand1) * parseFloat(operand2);
-                            break;
-                        case '/':
-                            res = parseFloat(operand1) / parseFloat(operand2);
-                            break;
-                        case '+':
-                            res = parseFloat(operand1) + parseFloat(operand2);
-                            break;
-                        case '-':
-                            res = parseFloat(operand1) - parseFloat(operand2);
-                            break;
-                    }
-                    operationStack.last = operationStack.last.previous.previous
-                    operationStack.add(new node(res))
-                    stackNodes.last = stackNodes.last.previous
-                    if(stackNodes.last.previous == null){
-                        return operationStack.last
-                    }
+        let exp1 = expression.split("")
+        let exp2 = []
+        for(let i = exp1.length-1; i >= 0; i--){
+            switch(exp1[i]){
+                case '*':
+                    exp2.push(parseFloat(exp2.pop())*parseFloat(exp2.pop()))
+                    break;
+                case '/':
+                    exp2.push(parseFloat(exp2.pop())/parseFloat(exp2.pop()))
+                    break;
+                case '+':
+                    exp2.push(parseFloat(exp2.pop()) + parseFloat(exp2.pop()))
+                    break;
+                case '-':
+                    exp2.push(parseFloat(exp2.pop())-parseFloat(exp2.pop()))
+                    break;
+                default:
+                        exp2.push(exp1[i])
+                    break;
                 }
-                else{
-                    operationStack.add(aux)
-                    stackNodes.last = stackNodes.last.previous
-                }
-            }
         }
+        return exp2.pop()
+    }
+    
+    calculatePostOrder(expression){
+        let exp1 = expression.split("")
+        let exp2 = []
+        let aux1 = 0
+        let aux2 = 0
+        for(let i = 0; i < exp1.length; i++){
+            if(exp1[i] == '*' || exp1[i] == '/' || exp1[i] == '+' || exp1[i] == '-'){
+                aux2 = parseFloat(exp2.pop())
+                aux1 = parseFloat(exp2.pop())
+            }
+            switch(exp1[i]){
+                case '*':
+                    exp2.push((aux1) * (aux2))
+                    break;
+                case '/':
+                    exp2.push((aux1) / (aux2))
+                    break;
+                case '+':
+                    exp2.push((aux1) +  (aux2))
+                    break;
+                case '-':
+                    exp2.push((aux1) - (aux2))
+                    break;
+                default:
+                        exp2.push(exp1[i])
+                    break;
+                }
+        }
+        return exp2.pop()
     }
 }
 
@@ -247,40 +258,23 @@ class doubleLinkedList {
       }
 }
 
-class stack{
-    constructor(){
-        this.last=null;
-      }
-    add(newNode){
-        if(this.last==null){
-            this.last=newNode;
-        }
-        else{
-            let aux=this.last;
-            this.last=newNode;
-            this.last.previous=aux;
-        }
-    }
-    list(){
-        if(this.last==null){
-            console.log("")
-        }
-        else{
-            let aux = this.last
-            let res = ""
-            while(aux != null){
-                res += aux.value
-                aux = aux.previous
-            }
-            console.log(res)
-        }
-    }
-}
-
+//expression examples
 const expression = "5-2*3+4"
-const expression2 = "5-2*3+4/2"
+const expression2 = "5-2*3+5/2"
+
+//tree declaration
 let myTree = new binary_tree();
-myTree.makeTree(expression)
+myTree.makeTree(expression2)
+
+//tree methods "preorder"{
+console.log("PREORDER")
 let preOrderExpression = myTree.listPreOrder()
 console.log(myTree.listPreOrder())
 console.log(myTree.calculatePreOrder(preOrderExpression))
+console.log("PREORDER\n")
+//tree methods "postorder"
+console.log("POSTORDER")
+let postOrderExpression = myTree.listPostOrder()
+console.log(myTree.listPostOrder())
+console.log(myTree.calculatePostOrder(postOrderExpression))
+console.log("POSTORDER\n")
