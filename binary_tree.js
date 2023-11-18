@@ -258,23 +258,40 @@ class doubleLinkedList {
       }
 }
 
-//expression examples
-const expression = "5-2*3+4"
-const expression2 = "5-2*3+5/2"
 
-//tree declaration
-let myTree = new binary_tree();
-myTree.makeTree(expression2)
+let myTree = new BinaryTree();
+const btnNormalExpression = document.getElementById('btnNormalExpression');
 
-//tree methods "preorder"{
-console.log("PREORDER")
-let preOrderExpression = myTree.listPreOrder()
-console.log(myTree.listPreOrder())
-console.log(myTree.calculatePreOrder(preOrderExpression))
-console.log("PREORDER\n")
-//tree methods "postorder"
-console.log("POSTORDER")
-let postOrderExpression = myTree.listPostOrder()
-console.log(myTree.listPostOrder())
-console.log(myTree.calculatePostOrder(postOrderExpression))
-console.log("POSTORDER\n")
+btnNormalExpression.addEventListener('click', () => {
+    alert('¡Hola!');
+    //     let expresion = String(document.getElementById('normalExpression').value);
+    //     let divRes=document.getElementById('divRes');
+    //     myTree.makeTree(expresion);
+    //     divRes.innerHTML=`<h4>Expresión preOrden: </h4><p>${myTree.listPreOrder()}</p><h4>Expresión postOrden: ${myTree.listPostOrder()} </h4>`;
+    });
+    
+
+
+
+
+// //node examples
+// //expression examples
+// const expression = "5-2*3+4"
+// const expression2 = "5-2*3+5/2"
+
+// //tree declaration
+// let myTree = new binary_tree();
+// myTree.makeTree(expression2)
+
+// //tree methods "preorder"{
+// console.log("PREORDER")
+// let preOrderExpression = myTree.listPreOrder()
+// console.log(myTree.listPreOrder())
+// console.log(myTree.calculatePreOrder(preOrderExpression))
+// console.log("PREORDER\n")
+// //tree methods "postorder"
+// console.log("POSTORDER")
+// let postOrderExpression = myTree.listPostOrder()
+// console.log(myTree.listPostOrder())
+// console.log(myTree.calculatePostOrder(postOrderExpression))
+// console.log("POSTORDER\n")

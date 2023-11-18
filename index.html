@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión</title>
+    <link rel="preload" href="css/normalize.css" as="style">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;800&display=swap" rel="stylesheet">
+    <link rel="preload" href="css/styles.css" as="style">
+    <link rel="stylesheet" href="css/styles.css" type="text/css">
+</head>
+<body class="body">
+    <main class="contenedor sombra" style="padding: 4.5rem;">
+        <h2>Calcular Árbol Binario</h2>
+
+    <form class="contenedor sombra form" >
+        <label for="normalExpression">Expresión matemática normal:</label>
+        <input type="text" id="normalExpression" class="input">
+        <button type="button" id="btnNormalExpression" class="boton">calcular</button>
+        <br>
+
+        <label for="preOrderExpression">Expresión PostOrden:</label>
+        <input type="preOrderExpression" id="preOrderExpression" class="input">
+        <button type="button" id="btnPreOrderExpression" class="boton">calcular</button>
+        <br>
+
+        <label for="postOrderExpression">Expresión PreOrden:</label>
+        <input type="postOrderExpression" id="postOrderExpression" class="input">
+        <button type="button" id="btnPostOrderExpression" class="boton">calcular</button>
+    </form>
+    
+    <h2> Resultados</h2>
+    <div class="resultados contenedor sombra">
+
+    </div>
+    </main>
+    <footer class="footer">
+        <p>¡Gracias por calcular aquí!</p>
+    </footer>
+
+    <script src="binary_tree.js">
+    </script>
+</body>
+</html>

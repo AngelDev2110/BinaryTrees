@@ -1,0 +1,111 @@
+:root{
+    --blanco: #ffffff;
+    --oscuro: #212121;
+    --primario: #439A97;
+    --secundario: #97DECE;
+    --terciario: cornflowerblue;
+    --gris: #8B9894;
+    
+    --familia-fuente-principal:'Roboto Slab', serif;
+
+}
+html{
+    font-size: 62.5%;
+    box-sizing: border-box;
+}
+*, *:before, *:after {
+    box-sizing: inherit;
+  }
+body{
+    font-size: 16px; /* 1rem = 10px */
+    font-family: var(--familia-fuente-principal);
+    background-image: linear-gradient(to top, #DFE9F3 0%, var(--blanco) 100%);
+    /*dirección, color y porcentaje de la altura del degradado tiene ese color*/
+    min-height: 110rem;
+}
+h1{
+    font-size: 3.8rem;
+    font-weight: 800;
+    color: var(--oscuro);
+}
+h2{
+    font-size: 2.8rem;
+}
+h3{
+    font-size: 1.8rem;
+}
+h1,h2,h3{
+    text-align: center;
+}
+
+.titulo span{
+    color: var(--terciario)
+}
+.contenedor{
+    max-width: 120rem;
+    margin: 0 auto;
+}
+
+.boton{
+    background-color: var(--primario);
+    color: var(--blanco);
+    padding: 1rem 3rem;
+    margin-top: 1rem;
+    text-decoration: none;
+    font-size: 2rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    border-radius: 1rem;
+    text-align: center;
+    width: 90%;
+    border: none;
+}
+@media (min-width:768px){
+    .boton{
+        width: auto;
+    }
+}
+
+.boton:hover{
+    cursor: pointer;
+}
+
+.sombra{
+    -webkit-box-shadow: 0px 5px 15px 0px rgba(0,0,0,0.62);
+-moz-box-shadow: 0px 5px 15px 0px rgba(0,0,0,0.62);
+box-shadow: 0px 5px 15px 0px rgba(0,0,0,0.62);
+background-color: var(--blanco);
+padding: 2rem;
+border-radius: 1rem;
+}
+.footer{
+    text-align: center;
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.boton-borrar{
+    background-color: var(--oscuro);
+}
+.input{
+    border-radius: 1rem;
+    border-color: var(--primario);
+    margin-top: 1rem;
+}
+.resultados{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 30rem;
+}
