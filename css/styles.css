@@ -96,6 +96,7 @@ border-radius: 1rem;
 }
 .boton-borrar{
     background-color: var(--oscuro);
+    align-items: center;
 }
 .input{
     border-radius: 1rem;

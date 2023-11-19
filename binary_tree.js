@@ -1,3 +1,36 @@
+const btnNormalExpression = document.getElementById('btnNormalExpression');
+btnNormalExpression.addEventListener('click', () => {
+        let expresion = String(document.getElementById('normalExpression').value);
+        let divRes=document.getElementById('divRes');
+        let myTree = new binary_tree;
+        myTree.makeTree(expresion);
+        divRes.innerHTML=`<h4>Expresión preOrden:</h4><p>${myTree.listPreOrder()}</p><h4>Expresión postOrden: </h4><p>${myTree.listPostOrder()}</p><h4>Resultado: </h4><p>${myTree.calculatePreOrder(myTree.listPreOrder())}</p>`;
+    });
+
+const btnLimpiar = document.getElementById('btnLimpiar');
+btnLimpiar.addEventListener('click', () => {
+    document.getElementById('normalExpression').value="";
+    document.getElementById('preOrderExpression').value="";
+    document.getElementById('postOrderExpression').value="";
+    document.getElementById('divRes').innerHTML="";
+});
+
+const btnPreOrder = document.getElementById('btnPreOrderExpression');
+btnPreOrder.addEventListener('click', () => {
+    let expresion = String(document.getElementById('preOrderExpression').value);
+    let divRes=document.getElementById('divRes');
+    let myTree = new binary_tree;
+    divRes.innerHTML=`<h4>Resultado de tu preOrden: </h4><p>${myTree.calculatePreOrder(expresion)}</p>`;
+});
+
+const btnPostOrder = document.getElementById('btnPostOrderExpression');
+btnPostOrder.addEventListener('click', () => {
+    let expresion = String(document.getElementById('postOrderExpression').value);
+    let divRes=document.getElementById('divRes');
+    let myTree = new binary_tree;
+    divRes.innerHTML=`<h4>Resultado de tu postOrden: </h4><p>${myTree.calculatePostOrder(expresion)}</p>`;
+});
+    
 class node{
     constructor(value){
         this.value = value;
@@ -259,17 +292,7 @@ class doubleLinkedList {
 }
 
 
-let myTree = new BinaryTree();
-const btnNormalExpression = document.getElementById('btnNormalExpression');
 
-btnNormalExpression.addEventListener('click', () => {
-    alert('¡Hola!');
-    //     let expresion = String(document.getElementById('normalExpression').value);
-    //     let divRes=document.getElementById('divRes');
-    //     myTree.makeTree(expresion);
-    //     divRes.innerHTML=`<h4>Expresión preOrden: </h4><p>${myTree.listPreOrder()}</p><h4>Expresión postOrden: ${myTree.listPostOrder()} </h4>`;
-    });
-    
 
 
 
