@@ -1,3 +1,4 @@
+//esto es el botón para resolver una operación
 const btnNormalExpression = document.getElementById('btnNormalExpression');
 btnNormalExpression.addEventListener('click', () => {
         let expresion = String(document.getElementById('normalExpression').value);
@@ -7,6 +8,7 @@ btnNormalExpression.addEventListener('click', () => {
         divRes.innerHTML=`<h4>Expresión preOrden:</h4><p>${myTree.listPreOrder()}</p><h4>Expresión postOrden: </h4><p>${myTree.listPostOrder()}</p><h4>Resultado: </h4><p>${myTree.calculatePreOrder(myTree.listPreOrder())}</p>`;
     });
 
+//esto es el botón para limpiar los valores de los inputs y de el div de respuestas
 const btnLimpiar = document.getElementById('btnLimpiar');
 btnLimpiar.addEventListener('click', () => {
     document.getElementById('normalExpression').value="";
@@ -15,6 +17,7 @@ btnLimpiar.addEventListener('click', () => {
     document.getElementById('divRes').innerHTML="";
 });
 
+//este botón muestra el resultado de una expresión preorden
 const btnPreOrder = document.getElementById('btnPreOrderExpression');
 btnPreOrder.addEventListener('click', () => {
     let expresion = String(document.getElementById('preOrderExpression').value);
@@ -23,6 +26,7 @@ btnPreOrder.addEventListener('click', () => {
     divRes.innerHTML=`<h4>Resultado de tu preOrden: </h4><p>${myTree.calculatePreOrder(expresion)}</p>`;
 });
 
+//este botón muestra el resultado de una expresión postorden
 const btnPostOrder = document.getElementById('btnPostOrderExpression');
 btnPostOrder.addEventListener('click', () => {
     let expresion = String(document.getElementById('postOrderExpression').value);
@@ -31,7 +35,7 @@ btnPostOrder.addEventListener('click', () => {
     divRes.innerHTML=`<h4>Resultado de tu postOrden: </h4><p>${myTree.calculatePostOrder(expresion)}</p>`;
 });
     
-class node{
+class node{ //nodos
     constructor(value){
         this.value = value;
         this.left = null;
@@ -41,7 +45,7 @@ class node{
     }
 }
 
-class binary_tree{
+class binary_tree{ //arbol binario con root
     constructor(){
         this.root = null;
     }
@@ -93,7 +97,7 @@ class binary_tree{
             return this._searchRecursive(current.right, nodeNum);
         }
     }
-    listInOrder(){
+    listInOrder(){ //da el recorrido in order de un árbol
         if(this.root == null){
             console.log("")
         }
@@ -110,7 +114,7 @@ class binary_tree{
             this._listInOrderRecursive(root.right)
         }
     }
-    listPreOrder(){
+    listPreOrder(){ //da el recorrido pre order de un árbol
         if(this.root == null){
             return ""
         }
@@ -129,7 +133,7 @@ class binary_tree{
         }
         return res; 
     }
-    listPostOrder(){
+    listPostOrder(){ //da el recorrido post order de un árbol
         if(this.root == null){
             return "";
         }
@@ -148,7 +152,7 @@ class binary_tree{
         res+=root.value
         return  res;
     }
-    makeTree(expression){
+    makeTree(expression){  //este método pide una expresión matemática en string, la convierte en una lista doblemente enlazada y de esa lista va sacando nodos y convirtiendo la lista en un arbol binario, devuelve el root del árbol
         let splitted_expression = expression.split("")
         let listNodes = new doubleLinkedList
         for(let i = 0; i < splitted_expression.length; i++){
@@ -205,7 +209,7 @@ class binary_tree{
         }
         this.root = aux
     }
-    calculatePreOrder(expression){
+    calculatePreOrder(expression){ //pide la expresión preorder y calcula su resultado
         let exp1 = expression.split("")
         let exp2 = []
         for(let i = exp1.length-1; i >= 0; i--){
@@ -230,7 +234,7 @@ class binary_tree{
         return exp2.pop()
     }
     
-    calculatePostOrder(expression){
+    calculatePostOrder(expression){ //pide la expresión postorder y calcula su resultado
         let exp1 = expression.split("")
         let exp2 = []
         let aux1 = 0
@@ -290,31 +294,3 @@ class doubleLinkedList {
           return nodo.value + ' ' + this._recListar(nodo.next);
       }
 }
-
-
-
-
-
-
-
-// //node examples
-// //expression examples
-// const expression = "5-2*3+4"
-// const expression2 = "5-2*3+5/2"
-
-// //tree declaration
-// let myTree = new binary_tree();
-// myTree.makeTree(expression2)
-
-// //tree methods "preorder"{
-// console.log("PREORDER")
-// let preOrderExpression = myTree.listPreOrder()
-// console.log(myTree.listPreOrder())
-// console.log(myTree.calculatePreOrder(preOrderExpression))
-// console.log("PREORDER\n")
-// //tree methods "postorder"
-// console.log("POSTORDER")
-// let postOrderExpression = myTree.listPostOrder()
-// console.log(myTree.listPostOrder())
-// console.log(myTree.calculatePostOrder(postOrderExpression))
-// console.log("POSTORDER\n")
